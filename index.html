@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Example sequence.js library</title>
+  <style>
+  body {
+    background-color: black;
+  }
+  
+  .backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    z-index: 10;
+  }
+  
+  .icon {
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+  }
+  
+  .icon--star {
+    width: 65px;
+    height: 48px;
+    background-color: white;
+    background-image: url("https://cssanimation.rocks/images/posts/steps/twitter_fave.png");
+    background-repeat: no-repeat;
+  }
+  
+  .icon--heart {
+    width: 100px;
+    height: 100px;
+    margin-top: 30px;
+    background-color: white;
+    background-image: url("https://cssanimation.rocks/images/posts/steps/heart.png");
+    background-repeat: no-repeat;
+  }
+  
+  [role="button"] {
+    cursor: pointer;
+  }
+  </style>
+</head>
+
+<body>
+  <h2 style="text-align:center; color:white">아이콘을 클릭하세요.</h2>
+  <div class="backdrop">
+    <i role="button" class="icon icon--star"> </i>
+    <i role="button" class="icon icon--heart"></i>
+  </div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.0/jquery.min.js'></script>
+  <script src="js/sequence.js"></script>
+  <script>
+  (function() {
+    var isAnimate = {
+      star: false,
+      heart: false
+    }
+
+    var imageSettings = {
+      star: {
+        width: 64,
+        height: 45,
+        scene: 56,
+        speed: 50,
+        selector: document.getElementsByClassName('icon--star')[0]
+      },
+      heart: {
+        width: 100,
+        height: 100,
+        scene: 29,
+        speed: 50,
+        selector: document.getElementsByClassName('icon--heart')[0]
+      }
+    }
+
+    var iconStar = new Sequence(imageSettings.star);
+    var iconHeart = new Sequence(imageSettings.heart);
+
+    $('.icon--star').on('click', function() {
+      if (isAnimate.star) {
+        iconStar.stop('pause');
+        isAnimate.star = false;
+        return true;
+      }
+      iconStar.play('once');
+      isAnimate.star = true;
+    });
+
+    $('.icon--heart').on('click', function() {
+      if (isAnimate.heart) {
+        iconHeart.stop('pause');
+        isAnimate.heart = false;
+        return true;
+      }
+      iconHeart.play();
+      isAnimate.heart = true;
+    });
+
+  }());
+  </script>
+</body>
+
+</html>
